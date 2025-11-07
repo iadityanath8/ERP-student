@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock, BookOpen  } from 'lucide-react';
 import type { UserRole } from '../types/User';
+import {useNavigate} from 'react-router-dom'; 
 
-const LoginPage = ({ onNavigate, onLogin }: any) => {
+
+const LoginPage = ({ onLogin }: any) => {
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({ email: '', password: '', role: 'student' as UserRole });
-  
+    const onNavigate = useNavigate();
+
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
       onLogin(formData.role);
@@ -32,7 +35,7 @@ const LoginPage = ({ onNavigate, onLogin }: any) => {
               >
                 <option value="student">Student</option>
                 <option value="franchise">Franchise Owner</option>
-                <option value="instructor">Instructor</option>
+                <option value="teacher">Teacher</option>
                 <option value="admin">Administrator</option>
               </select>
             </div>
@@ -81,7 +84,7 @@ const LoginPage = ({ onNavigate, onLogin }: any) => {
               </label>
               <button
                 type="button"
-                onClick={() => onNavigate('forgot-password')}
+                onClick={() => onNavigate('/forgot-password')}
                 className="text-sm text-indigo-600 hover:text-indigo-700 font-medium"
               >
                 Forgot password?

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import {  Mail, Lock,} from 'lucide-react';
+import {useNavigate} from 'react-router-dom';
 
-const ForgotPasswordPage = ({ onNavigate }: any) => {
+const ForgotPasswordPage = () => {
     const [email, setEmail] = useState('');
     const [submitted, setSubmitted] = useState(false);
-  
+    const onNavigate = useNavigate();  
+
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
       setSubmitted(true);
@@ -22,7 +24,7 @@ const ForgotPasswordPage = ({ onNavigate }: any) => {
               We've sent a password reset link to <strong>{email}</strong>. Please check your inbox and follow the instructions.
             </p>
             <button
-              onClick={() => onNavigate('login')}
+              onClick={() => onNavigate('/login')}
               className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-200"
             >
               Back to Login
@@ -69,7 +71,7 @@ const ForgotPasswordPage = ({ onNavigate }: any) => {
   
           <div className="mt-6 text-center">
             <button
-              onClick={() => onNavigate('login')}
+              onClick={() => onNavigate('/login')}
               className="text-indigo-600 hover:text-indigo-700 font-medium"
             >
               ← Back to Login

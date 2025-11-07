@@ -33,9 +33,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen">
-      <Navbar user={currentUser} onLogout={handleLogout} currentPage={''} onNavigate={function (page: string): void {
-        throw new Error('Function not implemented.');
-      } } />
+      <Navbar user={currentUser} onLogout={handleLogout} currentPage={''} />
       
       <Routes>
         <Route path="/" element={<LoginPage onLogin={handleLogin} />} />

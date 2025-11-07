@@ -1,10 +1,22 @@
 import { User, Building2, BarChart3, Users, BookOpen, DollarSign, TrendingUp, Activity } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
+import type { User as UserType } from '../types/User';
 
-const DashboardPage = ({ user, onNavigate }: any) => {
+interface DashboardPageProps {
+    user: UserType | null;
+}
+
+const DashboardPage: React.FC<DashboardPageProps> = ({user}) => {
+    useEffect(() => {
+        console.log(user);
+    }, [])
+
     const getDashboardContent = () => {
-        switch (user.role) {
+        switch (user?.role) {
             case 'admin':
+                console.log("this is admin in here look in here woow")
                 return {
                     title: 'Admin Dashboard',
                     stats: [
@@ -81,15 +93,15 @@ const DashboardPage = ({ user, onNavigate }: any) => {
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div>
                             <h1 className="text-3xl font-bold text-gray-900">{dashboardContent.title}</h1>
-                            <p className="text-gray-600 mt-1">Welcome back, {user.name}!</p>
+                            <p className="text-gray-600 mt-1">Welcome back, {user?.name}!</p>
                         </div>
-                        <button
-                            onClick={() => onNavigate('profile')}
+                        <Link
+                            to="/profile"
                             className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition duration-200"
                         >
                             <User size={20} />
                             Profile
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </header>
@@ -141,7 +153,7 @@ const DashboardPage = ({ user, onNavigate }: any) => {
                     <div className="bg-white rounded-xl shadow-md p-6">
                         <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
                         <div className="space-y-3">
-                            {user.role === 'admin' && (
+                            {user?.role === 'admin' && (
                                 <>
                                     <button className="w-full px-4 py-3 bg-indigo-50 text-indigo-700 rounded-lg font-semibold hover:bg-indigo-100 transition">
                                         Add New Franchise
@@ -154,7 +166,7 @@ const DashboardPage = ({ user, onNavigate }: any) => {
                                     </button>
                                 </>
                             )}
-                            {user.role === 'franchise' && (
+                            {user?.role === 'franchise' && (
                                 <>
                                     <button className="w-full px-4 py-3 bg-green-50 text-green-700 rounded-lg font-semibold hover:bg-green-100 transition">
                                         Enroll Student
@@ -167,7 +179,7 @@ const DashboardPage = ({ user, onNavigate }: any) => {
                                     </button>
                                 </>
                             )}
-                            {user.role === 'student' && (
+                            {user?.role === 'student' && (
                                 <>
                                     <button className="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-semibold hover:bg-purple-100 transition">
                                         Browse Courses
@@ -180,7 +192,7 @@ const DashboardPage = ({ user, onNavigate }: any) => {
                                     </button>
                                 </>
                             )}
-                            {user.role === 'instructor' && (
+                            {user?.role === 'teacher' && (
                                 <>
                                     <button className="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-semibold hover:bg-blue-100 transition">
                                         Create Assignment
