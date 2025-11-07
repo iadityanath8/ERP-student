@@ -103,7 +103,7 @@ const LoginPage = ({ onLogin }: any) => {
             <p className="text-gray-600">
               New franchise owner?{' '}
               <button
-                onClick={() => onNavigate('register-franchise')}
+                onClick={() => onNavigate('/register-franchise')}
                 className="text-indigo-600 hover:text-indigo-700 font-medium"
               >
                 Register here
