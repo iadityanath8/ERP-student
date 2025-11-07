@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     Menu, X, School, Home, Users, BookOpen, Calendar,
     FileText, DollarSign, Settings, Bell, Search,
@@ -26,6 +26,36 @@ const Navbar: React.FC<NavbarProps> = ({
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const onNavigate = useNavigate();
+    const profileRef = useRef<HTMLElement | null>(null);
+    const notificationRef = useRef<HTMLElement | null>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+          const target = event.target as Node;
+    
+          if (
+            isProfileDropdownOpen &&
+            profileRef.current &&
+            !profileRef.current.contains(target)
+          ) {
+            setIsProfileDropdownOpen(false);
+          }
+    
+          if (
+            isNotificationOpen &&
+            notificationRef.current &&
+            !notificationRef.current.contains(target)
+          ) {
+            setIsNotificationOpen(false);
+          }
+        };
+    
+        document.addEventListener("mousedown", handleClickOutside);
+    
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, [isProfileDropdownOpen, isNotificationOpen]);
 
     const getNavigationItems = () => {
         if (!user) return [];
@@ -204,7 +234,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
                                 {/* Notification Dropdown */}
                                 {isNotificationOpen && (
-                                    <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 py-2 max-h-96 overflow-y-auto">
+                                    <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 py-2 max-h-96 overflow-y-auto" ref={notificationRef}>
                                         <div className="px-4 py-2 border-b border-gray-200 flex justify-between items-center">
                                             <h3 className="font-semibold text-gray-900">Notifications</h3>
                                             <span className="text-xs text-indigo-600 font-medium">{unreadCount} new</span>
@@ -257,7 +287,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
                                 {/* Profile Dropdown Menu */}
                                 {isProfileDropdownOpen && (
-                                    <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2">
+                                    <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2" ref={profileRef}>
                                         <div className="px-4 py-3 border-b border-gray-200">
                                             <p className="text-sm font-semibold text-gray-900">{user.name}</p>
                                             <p className="text-xs text-gray-500">{user.email}</p>
@@ -267,7 +297,7 @@ const Navbar: React.FC<NavbarProps> = ({
                                         </div>
                                         <button
                                             onClick={() => {
-                                                onNavigate('profile');
+                                                onNavigate('/profile');
                                                 setIsProfileDropdownOpen(false);
                                             }}
                                             className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
@@ -315,8 +345,8 @@ const Navbar: React.FC<NavbarProps> = ({
                                     key={item.id}
                                     onClick={() => onNavigate(item.page)}
                                     className={`flex items-center space-x-2 px-4 py-3 text-sm font-medium rounded-t-lg transition-all ${isActive
-                                            ? 'text-indigo-600 bg-white border-b-2 border-indigo-600 shadow-sm'
-                                            : 'text-gray-600 hover:text-gray-900 hover:bg-white'
+                                        ? 'text-indigo-600 bg-white border-b-2 border-indigo-600 shadow-sm'
+                                        : 'text-gray-600 hover:text-gray-900 hover:bg-white'
                                         }`}
                                 >
                                     <Icon size={18} />
@@ -343,8 +373,8 @@ const Navbar: React.FC<NavbarProps> = ({
                                         setIsMobileMenuOpen(false);
                                     }}
                                     className={`w-full flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors ${isActive
-                                            ? 'text-indigo-600 bg-indigo-50'
-                                            : 'text-gray-600 hover:bg-gray-50'
+                                        ? 'text-indigo-600 bg-indigo-50'
+                                        : 'text-gray-600 hover:bg-gray-50'
                                         }`}
                                 >
                                     <Icon size={20} />
