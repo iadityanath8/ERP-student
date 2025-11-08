@@ -155,15 +155,15 @@ const DashboardPage: React.FC<DashboardPageProps> = ({user}) => {
                         <div className="space-y-3">
                             {user?.role === 'admin' && (
                                 <>
-                                    <button className="w-full px-4 py-3 bg-indigo-50 text-indigo-700 rounded-lg font-semibold hover:bg-indigo-100 transition">
+                                    <Link to="/admin/franchise/add" className="w-full px-4 py-3 bg-indigo-50 text-indigo-700 rounded-lg font-semibold hover:bg-indigo-100 transition block text-center">
                                         Add New Franchise
-                                    </button>
-                                    <button className="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-semibold hover:bg-purple-100 transition">
+                                    </Link>
+                                    <Link to="/admin/course" className="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-semibold hover:bg-purple-100 transition block text-center">
                                         Manage Courses
-                                    </button>
-                                    <button className="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-semibold hover:bg-blue-100 transition">
+                                    </Link>
+                                    <Link to="/admin/wallet/report" className="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-semibold hover:bg-blue-100 transition block text-center">
                                         View Reports
-                                    </button>
+                                    </Link>
                                 </>
                             )}
                             {user?.role === 'franchise' && (
@@ -181,28 +181,28 @@ const DashboardPage: React.FC<DashboardPageProps> = ({user}) => {
                             )}
                             {user?.role === 'student' && (
                                 <>
-                                    <button className="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-semibold hover:bg-purple-100 transition">
+                                    <Link to="/student/browse" className="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-semibold hover:bg-purple-100 transition block text-center">
                                         Browse Courses
-                                    </button>
-                                    <button className="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-semibold hover:bg-blue-100 transition">
+                                    </Link>
+                                    <Link to="/student/assignments/pending" className="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-semibold hover:bg-blue-100 transition block text-center">
                                         View Assignments
-                                    </button>
-                                    <button className="w-full px-4 py-3 bg-green-50 text-green-700 rounded-lg font-semibold hover:bg-green-100 transition">
+                                    </Link>
+                                    <Link to="/student/attendance" className="w-full px-4 py-3 bg-green-50 text-green-700 rounded-lg font-semibold hover:bg-green-100 transition block text-center">
                                         Attendance Report
-                                    </button>
+                                    </Link>
                                 </>
                             )}
                             {user?.role === 'teacher' && (
                                 <>
-                                    <button className="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-semibold hover:bg-blue-100 transition">
+                                    <Link to="/teacher/assignments/create" className="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-semibold hover:bg-blue-100 transition block text-center">
                                         Create Assignment
-                                    </button>
-                                    <button className="w-full px-4 py-3 bg-green-50 text-green-700 rounded-lg font-semibold hover:bg-green-100 transition">
+                                    </Link>
+                                    <Link to="/teacher/attendance" className="w-full px-4 py-3 bg-green-50 text-green-700 rounded-lg font-semibold hover:bg-green-100 transition block text-center">
                                         Mark Attendance
-                                    </button>
-                                    <button className="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-semibold hover:bg-purple-100 transition">
+                                    </Link>
+                                    <Link to="/teacher/materials" className="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-semibold hover:bg-purple-100 transition block text-center">
                                         Upload Material
-                                    </button>
+                                    </Link>
                                 </>
                             )}
                         </div>

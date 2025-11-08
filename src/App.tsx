@@ -8,6 +8,9 @@ import RegisterFranchisePage from './components/RegisterFranchise';
 import UserProfilePage from './components/UserProfilePage';
 import DashboardPage from './components/DashBoard';
 import Navbar from './components/Navbar';
+import AdminSidebar from './components/AdminSidebar';
+import TeacherSidebar from './components/TeacherSidebar';
+import StudentSidebar from './components/StudentSidebar';
 
 // Role & Permission Management
 import RoleList from './pages/role-permission/RoleList';
@@ -86,11 +89,23 @@ const App = () => {
     return '';
   };
 
+  // Check route types
+  const isAdminRoute = location.pathname.startsWith('/admin/');
+  const isTeacherRoute = location.pathname.startsWith('/teacher/');
+  const isStudentRoute = location.pathname.startsWith('/student/');
+  const showSidebar = (isAdminRoute || isTeacherRoute || isStudentRoute) && currentUser;
+
   return (
     <div className="min-h-screen">
       <Navbar user={currentUser} onLogout={handleLogout} currentPage={getCurrentPage()} />
       
-      <Routes>
+      <div className="flex">
+        {isAdminRoute && currentUser && <AdminSidebar />}
+        {isTeacherRoute && currentUser && <TeacherSidebar />}
+        {isStudentRoute && currentUser && <StudentSidebar />}
+        
+        <main className={`flex-1 ${showSidebar ? 'lg:ml-64' : ''}`}>
+          <Routes>
         {/* Auth Routes */}
         <Route path="/" element={<LoginPage onLogin={handleLogin} />} />
         <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
@@ -145,8 +160,36 @@ const App = () => {
         <Route path="/admin/course/topic/edit/:id" element={<EditTopic />} />
         <Route path="/admin/course/topic/materials/:topicId" element={<StudyMaterialPage />} />
 
+        {/* Teacher Routes */}
+        <Route path="/teacher/classes" element={<div className="p-8"><h1 className="text-2xl font-bold">My Classes</h1></div>} />
+        <Route path="/teacher/schedule" element={<div className="p-8"><h1 className="text-2xl font-bold">Schedule</h1></div>} />
+        <Route path="/teacher/materials" element={<div className="p-8"><h1 className="text-2xl font-bold">Upload Material</h1></div>} />
+        <Route path="/teacher/assignments/create" element={<div className="p-8"><h1 className="text-2xl font-bold">Create Assignment</h1></div>} />
+        <Route path="/teacher/assignments" element={<div className="p-8"><h1 className="text-2xl font-bold">View Submissions</h1></div>} />
+        <Route path="/teacher/assignments/grade" element={<div className="p-8"><h1 className="text-2xl font-bold">Grade Assignments</h1></div>} />
+        <Route path="/teacher/students" element={<div className="p-8"><h1 className="text-2xl font-bold">Student List</h1></div>} />
+        <Route path="/teacher/attendance" element={<div className="p-8"><h1 className="text-2xl font-bold">Mark Attendance</h1></div>} />
+        <Route path="/teacher/reports" element={<div className="p-8"><h1 className="text-2xl font-bold">Performance Reports</h1></div>} />
+        <Route path="/teacher/calendar" element={<div className="p-8"><h1 className="text-2xl font-bold">My Schedule</h1></div>} />
+        <Route path="/teacher/upcoming" element={<div className="p-8"><h1 className="text-2xl font-bold">Upcoming Classes</h1></div>} />
+
+        {/* Student Routes */}
+        <Route path="/student/courses" element={<div className="p-8"><h1 className="text-2xl font-bold">My Courses</h1></div>} />
+        <Route path="/student/browse" element={<div className="p-8"><h1 className="text-2xl font-bold">Browse Courses</h1></div>} />
+        <Route path="/student/materials" element={<div className="p-8"><h1 className="text-2xl font-bold">Study Materials</h1></div>} />
+        <Route path="/student/assignments/pending" element={<div className="p-8"><h1 className="text-2xl font-bold">Pending Assignments</h1></div>} />
+        <Route path="/student/assignments/submitted" element={<div className="p-8"><h1 className="text-2xl font-bold">Submitted Assignments</h1></div>} />
+        <Route path="/student/assignments/grades" element={<div className="p-8"><h1 className="text-2xl font-bold">Grades</h1></div>} />
+        <Route path="/student/progress" element={<div className="p-8"><h1 className="text-2xl font-bold">My Progress</h1></div>} />
+        <Route path="/student/attendance" element={<div className="p-8"><h1 className="text-2xl font-bold">Attendance</h1></div>} />
+        <Route path="/student/reports" element={<div className="p-8"><h1 className="text-2xl font-bold">Performance Report</h1></div>} />
+        <Route path="/student/schedule" element={<div className="p-8"><h1 className="text-2xl font-bold">Class Schedule</h1></div>} />
+        <Route path="/student/upcoming" element={<div className="p-8"><h1 className="text-2xl font-bold">Upcoming Classes</h1></div>} />
+
         <Route path="*" element={<LoginPage onLogin={handleLogin} />} />
-      </Routes>
+          </Routes>
+        </main>
+      </div>
     </div>
   );
 };
