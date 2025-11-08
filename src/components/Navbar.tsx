@@ -26,8 +26,8 @@ const Navbar: React.FC<NavbarProps> = ({
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const onNavigate = useNavigate();
-    const profileRef = useRef<HTMLElement | null>(null);
-    const notificationRef = useRef<HTMLElement | null>(null);
+    const profileRef = useRef<HTMLDivElement | null>(null);
+    const notificationRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
