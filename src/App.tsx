@@ -230,259 +230,228 @@ const App = () => {
   const isAdminRoute = location.pathname.startsWith('/admin/');
   const isTeacherRoute = location.pathname.startsWith('/teacher/');
   const isStudentRoute = location.pathname.startsWith('/student/');
-  const showSidebar = (isAdminRoute || isTeacherRoute || isStudentRoute) && currentUser;
+  const showSidebar = (isAdminRoute || isTeacherRoute || isStudentRoute) && user;
 
   return (
     <div className="min-h-screen">
       {isAuthenticated && <Navbar user={user} onLogout={handleLogout} currentPage={getCurrentPage()} />}
       
       <div className="flex">
-        {isAdminRoute && currentUser && <AdminSidebar />}
-        {isTeacherRoute && currentUser && <TeacherSidebar />}
-        {isStudentRoute && currentUser && <StudentSidebar />}
+        {isAdminRoute && user && <AdminSidebar />}
+        {isTeacherRoute && user && <TeacherSidebar />}
+        {isStudentRoute && user && <StudentSidebar />}
         
         <main className={`flex-1 ${showSidebar ? 'lg:ml-64' : ''}`}>
           <Routes>
-        {/* Auth Routes */}
-        <Route path="/" element={isAuthenticated ? <Navigate to={user?.role === 'student' ? '/student/dashboard' : '/dashboard'} replace /> : <LoginPage />} />
-        <Route path="/login" element={isAuthenticated ? <Navigate to={user?.role === 'student' ? '/student/dashboard' : '/dashboard'} replace /> : <LoginPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/register-franchise" element={<RegisterFranchisePage />} />
-        <Route path="/profile" element={<ProtectedRoute><UserProfilePage user={user} /></ProtectedRoute>} />
-        <Route path="/dashboard" element={<ProtectedRoute allowedRoles={['admin', 'franchise', 'teacher']}><DashboardPage user={user} /></ProtectedRoute>} />
+            {/* Auth Routes */}
+            <Route path="/" element={isAuthenticated ? <Navigate to={user?.role === 'student' ? '/student/dashboard' : '/dashboard'} replace /> : <LoginPage />} />
+            <Route path="/login" element={isAuthenticated ? <Navigate to={user?.role === 'student' ? '/student/dashboard' : '/dashboard'} replace /> : <LoginPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/register-franchise" element={<RegisterFranchisePage />} />
+            <Route path="/profile" element={<ProtectedRoute><UserProfilePage user={user} /></ProtectedRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute allowedRoles={['admin', 'franchise', 'teacher']}><DashboardPage user={user} /></ProtectedRoute>} />
 
-        {/* Role & Permission Management (Admin Only) */}
-        <Route path="/admin/roles" element={<ProtectedRoute allowedRoles={['admin']}><RoleList /></ProtectedRoute>} />
-        <Route path="/admin/roles/add" element={<AddEditRole />} />
-        <Route path="/admin/roles/edit/:id" element={<AddEditRole />} />
-        <Route path="/admin/roles/permissions" element={<PermissionList />} />
-        <Route path="/admin/roles/assign/:roleId" element={<AssignPermission />} />
-        <Route path="/admin/roles/view/:roleId" element={<ViewRoleAccess />} />
+            {/* Role & Permission Management (Admin Only) */}
+            <Route path="/admin/roles" element={<ProtectedRoute allowedRoles={['admin']}><RoleList /></ProtectedRoute>} />
+            <Route path="/admin/roles/add" element={<AddEditRole />} />
+            <Route path="/admin/roles/edit/:id" element={<AddEditRole />} />
+            <Route path="/admin/roles/permissions" element={<PermissionList />} />
+            <Route path="/admin/roles/assign/:roleId" element={<AssignPermission />} />
+            <Route path="/admin/roles/view/:roleId" element={<ViewRoleAccess />} />
 
-        {/* Franchise Management (Admin) */}
-        <Route path="/admin/franchise" element={<FranchiseList />} />
-        <Route path="/admin/franchise/add" element={<AddFranchise />} />
-        <Route path="/admin/franchise/edit/:id" element={<UpdateFranchise />} />
-        <Route path="/admin/franchise/view/:id" element={<ViewFranchise />} />
-        <Route path="/admin/franchise/documents/:id" element={<UploadDocuments />} />
-        <Route path="/admin/franchise/users/:id" element={<ManageFranchiseUser />} />
-        <Route path="/admin/franchise/dashboard/:id" element={<BranchDashboard />} />
-        <Route path="/admin/franchise/delete/:id" element={<DeleteSuspendFranchise />} />
+            {/* Franchise Management (Admin) */}
+            <Route path="/admin/franchise" element={<FranchiseList />} />
+            <Route path="/admin/franchise/add" element={<AddFranchise />} />
+            <Route path="/admin/franchise/edit/:id" element={<UpdateFranchise />} />
+            <Route path="/admin/franchise/view/:id" element={<ViewFranchise />} />
+            <Route path="/admin/franchise/documents/:id" element={<UploadDocuments />} />
+            <Route path="/admin/franchise/users/:id" element={<ManageFranchiseUser />} />
+            <Route path="/admin/franchise/dashboard/:id" element={<BranchDashboard />} />
+            <Route path="/admin/franchise/delete/:id" element={<DeleteSuspendFranchise />} />
 
-        {/* Franchise Wallet (Admin + Franchise) */}
-        <Route path="/admin/wallet" element={<WalletOverviewPage />} />
-        <Route path="/admin/wallet/add-amount" element={<AddAmountAdminToFranchise />} />
-        <Route path="/admin/wallet/payment-to-admin" element={<AddAmountFranchiseToAdmin />} />
-        <Route path="/admin/wallet/transactions" element={<TransactionRecord />} />
-        <Route path="/admin/wallet/report" element={<WalletReportPage />} />
-        <Route path="/admin/wallet/notices" element={<FranchiseNoticeBoard />} />
+            {/* Franchise Wallet (Admin + Franchise) */}
+            <Route path="/admin/wallet" element={<WalletOverviewPage />} />
+            <Route path="/admin/wallet/add-amount" element={<AddAmountAdminToFranchise />} />
+            <Route path="/admin/wallet/payment-to-admin" element={<AddAmountFranchiseToAdmin />} />
+            <Route path="/admin/wallet/transactions" element={<TransactionRecord />} />
+            <Route path="/admin/wallet/report" element={<WalletReportPage />} />
+            <Route path="/admin/wallet/notices" element={<FranchiseNoticeBoard />} />
 
-        {/* Course Management (Admin + Franchise) */}
-        <Route path="/admin/course/programs" element={<ProgramList />} />
-        <Route path="/admin/course/program/add" element={<AddProgram />} />
-        <Route path="/admin/course/program/edit/:id" element={<EditProgram />} />
-        <Route path="/admin/course/program/view/:id" element={<ViewProgram />} />
-        <Route path="/admin/course" element={<CourseList />} />
-        <Route path="/admin/course/add" element={<AddEditCourse />} />
-        <Route path="/admin/course/edit/:id" element={<AddEditCourse />} />
-        <Route path="/admin/course/view/:id" element={<ViewCourse />} />
-        <Route path="/admin/course/subjects" element={<SubjectList />} />
-        <Route path="/admin/course/subject/add" element={<AddSubject />} />
-        <Route path="/admin/course/subject/edit/:id" element={<EditSubject />} />
-        <Route path="/admin/course/syllabus" element={<SyllabusList />} />
-        <Route path="/admin/course/syllabus/add" element={<AddSyllabus />} />
-        <Route path="/admin/course/topics" element={<TopicsList />} />
-        <Route path="/admin/course/topic/add" element={<AddTopic />} />
-        <Route path="/admin/course/topic/edit/:id" element={<EditTopic />} />
-        <Route path="/admin/course/topic/materials/:topicId" element={<StudyMaterialPage />} />
+            {/* Course Management (Admin + Franchise) */}
+            <Route path="/admin/course/programs" element={<ProgramList />} />
+            <Route path="/admin/course/program/add" element={<AddProgram />} />
+            <Route path="/admin/course/program/edit/:id" element={<EditProgram />} />
+            <Route path="/admin/course/program/view/:id" element={<ViewProgram />} />
+            <Route path="/admin/course" element={<CourseList />} />
+            <Route path="/admin/course/add" element={<AddEditCourse />} />
+            <Route path="/admin/course/edit/:id" element={<AddEditCourse />} />
+            <Route path="/admin/course/view/:id" element={<ViewCourse />} />
+            <Route path="/admin/course/subjects" element={<SubjectList />} />
+            <Route path="/admin/course/subject/add" element={<AddSubject />} />
+            <Route path="/admin/course/subject/edit/:id" element={<EditSubject />} />
+            <Route path="/admin/course/syllabus" element={<SyllabusList />} />
+            <Route path="/admin/course/syllabus/add" element={<AddSyllabus />} />
+            <Route path="/admin/course/topics" element={<TopicsList />} />
+            <Route path="/admin/course/topic/add" element={<AddTopic />} />
+            <Route path="/admin/course/topic/edit/:id" element={<EditTopic />} />
+            <Route path="/admin/course/topic/materials/:topicId" element={<StudyMaterialPage />} />
 
-<<<<<<< Updated upstream
-        {/* Teacher Routes */}
-        <Route path="/teacher/classes" element={<div className="p-8"><h1 className="text-2xl font-bold">My Classes</h1></div>} />
-        <Route path="/teacher/schedule" element={<div className="p-8"><h1 className="text-2xl font-bold">Schedule</h1></div>} />
-        <Route path="/teacher/materials" element={<div className="p-8"><h1 className="text-2xl font-bold">Upload Material</h1></div>} />
-        <Route path="/teacher/assignments/create" element={<div className="p-8"><h1 className="text-2xl font-bold">Create Assignment</h1></div>} />
-        <Route path="/teacher/assignments" element={<div className="p-8"><h1 className="text-2xl font-bold">View Submissions</h1></div>} />
-        <Route path="/teacher/assignments/grade" element={<div className="p-8"><h1 className="text-2xl font-bold">Grade Assignments</h1></div>} />
-        <Route path="/teacher/students" element={<div className="p-8"><h1 className="text-2xl font-bold">Student List</h1></div>} />
-        <Route path="/teacher/attendance" element={<div className="p-8"><h1 className="text-2xl font-bold">Mark Attendance</h1></div>} />
-        <Route path="/teacher/reports" element={<div className="p-8"><h1 className="text-2xl font-bold">Performance Reports</h1></div>} />
-        <Route path="/teacher/calendar" element={<div className="p-8"><h1 className="text-2xl font-bold">My Schedule</h1></div>} />
-        <Route path="/teacher/upcoming" element={<div className="p-8"><h1 className="text-2xl font-bold">Upcoming Classes</h1></div>} />
+            {/* Batch Management */}
+            <Route path="/admin/batch" element={<BatchList />} />
+            <Route path="/admin/batch/add" element={<AddEditBatch />} />
+            <Route path="/admin/batch/edit/:id" element={<AddEditBatch />} />
+            <Route path="/admin/batch/view/:id" element={<BatchDetailsView />} />
+            <Route path="/admin/batch/assign/:id" element={<AssignStudents />} />
 
-        {/* Student Routes */}
-        <Route path="/student/courses" element={<div className="p-8"><h1 className="text-2xl font-bold">My Courses</h1></div>} />
-        <Route path="/student/browse" element={<div className="p-8"><h1 className="text-2xl font-bold">Browse Courses</h1></div>} />
-        <Route path="/student/materials" element={<div className="p-8"><h1 className="text-2xl font-bold">Study Materials</h1></div>} />
-        <Route path="/student/assignments/pending" element={<div className="p-8"><h1 className="text-2xl font-bold">Pending Assignments</h1></div>} />
-        <Route path="/student/assignments/submitted" element={<div className="p-8"><h1 className="text-2xl font-bold">Submitted Assignments</h1></div>} />
-        <Route path="/student/assignments/grades" element={<div className="p-8"><h1 className="text-2xl font-bold">Grades</h1></div>} />
-        <Route path="/student/progress" element={<div className="p-8"><h1 className="text-2xl font-bold">My Progress</h1></div>} />
-        <Route path="/student/attendance" element={<div className="p-8"><h1 className="text-2xl font-bold">Attendance</h1></div>} />
-        <Route path="/student/reports" element={<div className="p-8"><h1 className="text-2xl font-bold">Performance Report</h1></div>} />
-        <Route path="/student/schedule" element={<div className="p-8"><h1 className="text-2xl font-bold">Class Schedule</h1></div>} />
-        <Route path="/student/upcoming" element={<div className="p-8"><h1 className="text-2xl font-bold">Upcoming Classes</h1></div>} />
+            {/* Student Enquiries */}
+            <Route path="/admin/enquiry" element={<EnquiryList />} />
+            <Route path="/admin/enquiry/add" element={<AddEnquiry />} />
+            <Route path="/admin/enquiry/view/:id" element={<ViewEnquiry />} />
+            <Route path="/admin/enquiry/followup/:id" element={<FollowUpTracker />} />
+            <Route path="/admin/enquiry/convert/:id" element={<ConvertToAdmission />} />
 
-        <Route path="*" element={<LoginPage onLogin={handleLogin} />} />
+            {/* Student Admission */}
+            <Route path="/admin/admission" element={<AdmissionList />} />
+            <Route path="/admin/admission/add" element={<AddAdmission />} />
+            <Route path="/admin/admission/view/:id" element={<ViewAdmission />} />
+            <Route path="/admin/admission/roll-number/:id" element={<GenerateRollNumber />} />
+            <Route path="/admin/admission/credentials/:id" element={<AssignCredentials />} />
+            <Route path="/admin/admission/documents/:id" element={<UploadAdmissionDocuments />} />
+            <Route path="/admin/admission/report" element={<AdmissionReport />} />
+
+            {/* Fee Management */}
+            <Route path="/admin/fee/dashboard" element={<FeeDashboardPage />} />
+            <Route path="/admin/fee/slips" element={<FeeSlipList />} />
+            <Route path="/admin/fee/slip/add" element={<AddFeeSlip />} />
+            <Route path="/admin/fee/slip/view/:id" element={<ViewFeeSlip />} />
+            <Route path="/admin/fee/due" element={<DueFeeList />} />
+            <Route path="/admin/fee/report" element={<FeeReportPage />} />
+            <Route path="/admin/fee/reminder" element={<FeeReminderNotification />} />
+
+            {/* Online Live Class */}
+            <Route path="/admin/live-class" element={<LiveClassDashboard />} />
+            <Route path="/admin/live-class/youtube/add" element={<AddYouTubeClass />} />
+            <Route path="/admin/live-class/zoom/add" element={<AddZoomMeetClass />} />
+            <Route path="/admin/live-class/calendar" element={<ClassCalendarPage />} />
+            <Route path="/admin/live-class/join/:id" element={<JoinClass />} />
+            <Route path="/admin/live-class/recordings" element={<ClassRecordings />} />
+
+            {/* Online Exam Module */}
+            <Route path="/admin/exam/questions" element={<QuestionBank />} />
+            <Route path="/admin/exam/question/add" element={<AddQuestion />} />
+            <Route path="/admin/exam/question/edit/:id" element={<AddQuestion />} />
+            <Route path="/admin/exam/question/import" element={<ImportQuestion />} />
+            <Route path="/admin/exam" element={<ExamList />} />
+            <Route path="/admin/exam/add" element={<AddExam />} />
+            <Route path="/admin/exam/edit/:id" element={<AddExam />} />
+            <Route path="/admin/exam/view/:id" element={<ExamResult />} />
+            <Route path="/admin/exam/admit-card/:examId" element={<AdmitCardGenerator />} />
+            <Route path="/admin/exam/result/:examId" element={<ExamResult />} />
+            <Route path="/admin/exam/analytics/:examId" element={<ExamAnalyticsPage />} />
+            <Route path="/student/exam/ongoing" element={<OngoingExams />} />
+            <Route path="/student/exam/completed" element={<CompletedExams />} />
+
+            {/* Certificate & Marksheet */}
+            <Route path="/admin/certificate" element={<CertificateList />} />
+            <Route path="/admin/certificate/generate" element={<CertificateGenerator />} />
+            <Route path="/admin/marksheet/generate" element={<MarksheetGenerator />} />
+            <Route path="/admin/certificate/view/:type/:id" element={<ViewDownload />} />
+
+            {/* Staff Management */}
+            <Route path="/admin/staff" element={<StaffList />} />
+            <Route path="/admin/staff/add" element={<AddStaff />} />
+            <Route path="/admin/staff/edit/:id" element={<EditStaff />} />
+            <Route path="/admin/staff/view/:id" element={<AddStaff />} />
+            <Route path="/admin/staff/assign-role/:id" element={<AssignRole />} />
+            <Route path="/admin/staff/report" element={<StaffReport />} />
+
+            {/* Attendance */}
+            <Route path="/admin/attendance/student" element={<StudentAttendancePage />} />
+            <Route path="/admin/attendance/mark" element={<MarkAttendance />} />
+            <Route path="/admin/attendance/report" element={<AttendanceReportPage />} />
+            <Route path="/admin/attendance/staff" element={<StaffAttendancePage />} />
+            <Route path="/admin/attendance/staff/mark" element={<MarkStaffAttendance />} />
+            <Route path="/admin/attendance/calendar" element={<AttendanceCalendar />} />
+
+            {/* Income & Expenses */}
+            <Route path="/admin/finance/dashboard" element={<FinanceDashboard />} />
+            <Route path="/admin/finance/income" element={<IncomeList />} />
+            <Route path="/admin/finance/income/add" element={<AddIncome />} />
+            <Route path="/admin/finance/income/edit/:id" element={<AddIncome />} />
+            <Route path="/admin/finance/expense" element={<ExpenseList />} />
+            <Route path="/admin/finance/expense/add" element={<AddExpense />} />
+            <Route path="/admin/finance/expense/edit/:id" element={<AddExpense />} />
+            <Route path="/admin/finance/report" element={<FinanceReport />} />
+
+            {/* Notifications */}
+            <Route path="/admin/notification" element={<NotificationList />} />
+            <Route path="/admin/notification/send" element={<SendNotification />} />
+            <Route path="/admin/notification/templates" element={<NotificationTemplates />} />
+            <Route path="/admin/notification/template/add" element={<SendNotification />} />
+            <Route path="/admin/notification/template/edit/:id" element={<SendNotification />} />
+            <Route path="/admin/notification/settings" element={<NotificationSettings />} />
+            <Route path="/admin/notification/history" element={<NotificationHistory />} />
+            <Route path="/admin/notification/queue" element={<NotificationQueue />} />
+
+            {/* Reports & Analysis */}
+            <Route path="/admin/reports/student" element={<StudentReport />} />
+            <Route path="/admin/reports/fee" element={<FeeReport />} />
+            <Route path="/admin/reports/attendance" element={<AttendanceReport />} />
+            <Route path="/admin/reports/exam" element={<ExamReport />} />
+            <Route path="/admin/reports/analytics" element={<AnalyticsDashboard />} />
+
+            {/* Course Sales */}
+            <Route path="/admin/sales" element={<CourseSalesList />} />
+            <Route path="/admin/sales/add" element={<AddSale />} />
+            <Route path="/admin/sales/view/:id" element={<AddSale />} />
+            <Route path="/admin/sales/report" element={<SalesReport />} />
+
+            {/* Support Center */}
+            <Route path="/admin/support" element={<TicketList />} />
+            <Route path="/admin/support/ticket/create" element={<CreateTicket />} />
+            <Route path="/admin/support/ticket/view/:id" element={<ViewTicket />} />
+            <Route path="/admin/support/management" element={<TicketManagement />} />
+
+            {/* Integrations */}
+            <Route path="/admin/integration" element={<IntegrationList />} />
+            <Route path="/admin/integration/add" element={<AddIntegration />} />
+            <Route path="/admin/integration/edit/:id" element={<AddIntegration />} />
+            <Route path="/admin/integration/settings/:id" element={<IntegrationSettings />} />
+            <Route path="/admin/integration/logs/:id" element={<IntegrationLogs />} />
+
+            {/* Front CMS */}
+            <Route path="/admin/cms/pages" element={<PageList />} />
+            <Route path="/admin/cms/page/add" element={<AddEditPage />} />
+            <Route path="/admin/cms/page/edit/:id" element={<AddEditPage />} />
+            <Route path="/admin/cms/page/preview/:id" element={<PagePreview />} />
+            <Route path="/admin/cms/menu" element={<MenuManagement />} />
+            <Route path="/admin/cms/banners" element={<BannerManagement />} />
+            <Route path="/admin/cms/settings" element={<CMSSettings />} />
+
+            {/* Student Panel */}
+            <Route path="/student/dashboard" element={<ProtectedRoute allowedRoles={['student']}><StudentDashboard /></ProtectedRoute>} />
+            <Route path="/student/profile" element={<StudentProfile />} />
+            <Route path="/student/courses" element={<StudentCourses />} />
+            <Route path="/student/live-classes" element={<StudentLiveClasses />} />
+            <Route path="/student/exams" element={<StudentExams />} />
+            <Route path="/student/exam/:id" element={<StudentExams />} />
+            <Route path="/student/exam/result/:id" element={<StudentResults />} />
+            <Route path="/student/results" element={<StudentResults />} />
+            <Route path="/student/certificates" element={<StudentCertificates />} />
+            <Route path="/student/fees" element={<StudentFeePayment />} />
+            <Route path="/student/attendance" element={<StudentAttendance />} />
+            <Route path="/student/materials" element={<StudentMaterials />} />
+            <Route path="/student/notifications" element={<StudentNotifications />} />
+            <Route path="/student/support" element={<StudentSupport />} />
+            <Route path="/student/support/create" element={<CreateTicket />} />
+            <Route path="/student/support/ticket/:id" element={<ViewTicket />} />
+            <Route path="/student/settings" element={<StudentSettings />} />
+
+            <Route path="*" element={<LoginPage />} />
           </Routes>
         </main>
       </div>
-=======
-        {/* Batch Management */}
-        <Route path="/admin/batch" element={<BatchList />} />
-        <Route path="/admin/batch/add" element={<AddEditBatch />} />
-        <Route path="/admin/batch/edit/:id" element={<AddEditBatch />} />
-        <Route path="/admin/batch/view/:id" element={<BatchDetailsView />} />
-        <Route path="/admin/batch/assign/:id" element={<AssignStudents />} />
-
-        {/* Student Enquiries */}
-        <Route path="/admin/enquiry" element={<EnquiryList />} />
-        <Route path="/admin/enquiry/add" element={<AddEnquiry />} />
-        <Route path="/admin/enquiry/view/:id" element={<ViewEnquiry />} />
-        <Route path="/admin/enquiry/followup/:id" element={<FollowUpTracker />} />
-        <Route path="/admin/enquiry/convert/:id" element={<ConvertToAdmission />} />
-
-        {/* Student Admission */}
-        <Route path="/admin/admission" element={<AdmissionList />} />
-        <Route path="/admin/admission/add" element={<AddAdmission />} />
-        <Route path="/admin/admission/view/:id" element={<ViewAdmission />} />
-        <Route path="/admin/admission/roll-number/:id" element={<GenerateRollNumber />} />
-        <Route path="/admin/admission/credentials/:id" element={<AssignCredentials />} />
-        <Route path="/admin/admission/documents/:id" element={<UploadAdmissionDocuments />} />
-        <Route path="/admin/admission/report" element={<AdmissionReport />} />
-
-        {/* Fee Management */}
-        <Route path="/admin/fee/dashboard" element={<FeeDashboardPage />} />
-        <Route path="/admin/fee/slips" element={<FeeSlipList />} />
-        <Route path="/admin/fee/slip/add" element={<AddFeeSlip />} />
-        <Route path="/admin/fee/slip/view/:id" element={<ViewFeeSlip />} />
-        <Route path="/admin/fee/due" element={<DueFeeList />} />
-        <Route path="/admin/fee/report" element={<FeeReportPage />} />
-        <Route path="/admin/fee/reminder" element={<FeeReminderNotification />} />
-
-        {/* Online Live Class */}
-        <Route path="/admin/live-class" element={<LiveClassDashboard />} />
-        <Route path="/admin/live-class/youtube/add" element={<AddYouTubeClass />} />
-        <Route path="/admin/live-class/zoom/add" element={<AddZoomMeetClass />} />
-        <Route path="/admin/live-class/calendar" element={<ClassCalendarPage />} />
-        <Route path="/admin/live-class/join/:id" element={<JoinClass />} />
-        <Route path="/admin/live-class/recordings" element={<ClassRecordings />} />
-
-        {/* Online Exam Module */}
-        <Route path="/admin/exam/questions" element={<QuestionBank />} />
-        <Route path="/admin/exam/question/add" element={<AddQuestion />} />
-        <Route path="/admin/exam/question/edit/:id" element={<AddQuestion />} />
-        <Route path="/admin/exam/question/import" element={<ImportQuestion />} />
-        <Route path="/admin/exam" element={<ExamList />} />
-        <Route path="/admin/exam/add" element={<AddExam />} />
-        <Route path="/admin/exam/edit/:id" element={<AddExam />} />
-        <Route path="/admin/exam/view/:id" element={<ExamResult />} />
-        <Route path="/admin/exam/admit-card/:examId" element={<AdmitCardGenerator />} />
-        <Route path="/admin/exam/result/:examId" element={<ExamResult />} />
-        <Route path="/admin/exam/analytics/:examId" element={<ExamAnalyticsPage />} />
-        <Route path="/student/exam/ongoing" element={<OngoingExams />} />
-        <Route path="/student/exam/completed" element={<CompletedExams />} />
-
-        {/* Certificate & Marksheet */}
-        <Route path="/admin/certificate" element={<CertificateList />} />
-        <Route path="/admin/certificate/generate" element={<CertificateGenerator />} />
-        <Route path="/admin/marksheet/generate" element={<MarksheetGenerator />} />
-        <Route path="/admin/certificate/view/:type/:id" element={<ViewDownload />} />
-
-        {/* Staff Management */}
-        <Route path="/admin/staff" element={<StaffList />} />
-        <Route path="/admin/staff/add" element={<AddStaff />} />
-        <Route path="/admin/staff/edit/:id" element={<EditStaff />} />
-        <Route path="/admin/staff/view/:id" element={<AddStaff />} />
-        <Route path="/admin/staff/assign-role/:id" element={<AssignRole />} />
-        <Route path="/admin/staff/report" element={<StaffReport />} />
-
-        {/* Attendance */}
-        <Route path="/admin/attendance/student" element={<StudentAttendancePage />} />
-        <Route path="/admin/attendance/mark" element={<MarkAttendance />} />
-        <Route path="/admin/attendance/report" element={<AttendanceReportPage />} />
-        <Route path="/admin/attendance/staff" element={<StaffAttendancePage />} />
-        <Route path="/admin/attendance/staff/mark" element={<MarkStaffAttendance />} />
-        <Route path="/admin/attendance/calendar" element={<AttendanceCalendar />} />
-
-        {/* Income & Expenses */}
-        <Route path="/admin/finance/dashboard" element={<FinanceDashboard />} />
-        <Route path="/admin/finance/income" element={<IncomeList />} />
-        <Route path="/admin/finance/income/add" element={<AddIncome />} />
-        <Route path="/admin/finance/income/edit/:id" element={<AddIncome />} />
-        <Route path="/admin/finance/expense" element={<ExpenseList />} />
-        <Route path="/admin/finance/expense/add" element={<AddExpense />} />
-        <Route path="/admin/finance/expense/edit/:id" element={<AddExpense />} />
-        <Route path="/admin/finance/report" element={<FinanceReport />} />
-
-        {/* Notifications */}
-        <Route path="/admin/notification" element={<NotificationList />} />
-        <Route path="/admin/notification/send" element={<SendNotification />} />
-        <Route path="/admin/notification/templates" element={<NotificationTemplates />} />
-        <Route path="/admin/notification/template/add" element={<SendNotification />} />
-        <Route path="/admin/notification/template/edit/:id" element={<SendNotification />} />
-        <Route path="/admin/notification/settings" element={<NotificationSettings />} />
-        <Route path="/admin/notification/history" element={<NotificationHistory />} />
-        <Route path="/admin/notification/queue" element={<NotificationQueue />} />
-
-        {/* Reports & Analysis */}
-        <Route path="/admin/reports/student" element={<StudentReport />} />
-        <Route path="/admin/reports/fee" element={<FeeReport />} />
-        <Route path="/admin/reports/attendance" element={<AttendanceReport />} />
-        <Route path="/admin/reports/exam" element={<ExamReport />} />
-        <Route path="/admin/reports/analytics" element={<AnalyticsDashboard />} />
-
-        {/* Course Sales */}
-        <Route path="/admin/sales" element={<CourseSalesList />} />
-        <Route path="/admin/sales/add" element={<AddSale />} />
-        <Route path="/admin/sales/view/:id" element={<AddSale />} />
-        <Route path="/admin/sales/report" element={<SalesReport />} />
-
-        {/* Support Center */}
-        <Route path="/admin/support" element={<TicketList />} />
-        <Route path="/admin/support/ticket/create" element={<CreateTicket />} />
-        <Route path="/admin/support/ticket/view/:id" element={<ViewTicket />} />
-        <Route path="/admin/support/management" element={<TicketManagement />} />
-
-        {/* Integrations */}
-        <Route path="/admin/integration" element={<IntegrationList />} />
-        <Route path="/admin/integration/add" element={<AddIntegration />} />
-        <Route path="/admin/integration/edit/:id" element={<AddIntegration />} />
-        <Route path="/admin/integration/settings/:id" element={<IntegrationSettings />} />
-        <Route path="/admin/integration/logs/:id" element={<IntegrationLogs />} />
-
-        {/* Front CMS */}
-        <Route path="/admin/cms/pages" element={<PageList />} />
-        <Route path="/admin/cms/page/add" element={<AddEditPage />} />
-        <Route path="/admin/cms/page/edit/:id" element={<AddEditPage />} />
-        <Route path="/admin/cms/page/preview/:id" element={<PagePreview />} />
-        <Route path="/admin/cms/menu" element={<MenuManagement />} />
-        <Route path="/admin/cms/banners" element={<BannerManagement />} />
-        <Route path="/admin/cms/settings" element={<CMSSettings />} />
-
-        {/* Student Panel */}
-        <Route path="/student/dashboard" element={<ProtectedRoute allowedRoles={['student']}><StudentDashboard /></ProtectedRoute>} />
-        <Route path="/student/profile" element={<StudentProfile />} />
-        <Route path="/student/courses" element={<StudentCourses />} />
-        <Route path="/student/live-classes" element={<StudentLiveClasses />} />
-        <Route path="/student/exams" element={<StudentExams />} />
-        <Route path="/student/exam/:id" element={<StudentExams />} />
-        <Route path="/student/exam/result/:id" element={<StudentResults />} />
-        <Route path="/student/results" element={<StudentResults />} />
-        <Route path="/student/certificates" element={<StudentCertificates />} />
-        <Route path="/student/fees" element={<StudentFeePayment />} />
-        <Route path="/student/attendance" element={<StudentAttendance />} />
-        <Route path="/student/materials" element={<StudentMaterials />} />
-        <Route path="/student/notifications" element={<StudentNotifications />} />
-        <Route path="/student/support" element={<StudentSupport />} />
-        <Route path="/student/support/create" element={<CreateTicket />} />
-        <Route path="/student/support/ticket/:id" element={<ViewTicket />} />
-        <Route path="/student/settings" element={<StudentSettings />} />
-
-        <Route path="*" element={<LoginPage />} />
-      </Routes>
->>>>>>> Stashed changes
     </div>
   );
 };

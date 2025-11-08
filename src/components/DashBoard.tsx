@@ -123,67 +123,6 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
     { title: 'Study Materials', description: 'Upload materials', icon: FileText, link: '/admin/course/topics', color: 'text-pink-600', bgColor: 'bg-pink-50' },
   ];
 
-<<<<<<< Updated upstream
-                    {/* Quick Actions */}
-                    <div className="bg-white rounded-xl shadow-md p-6">
-                        <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
-                        <div className="space-y-3">
-                            {user?.role === 'admin' && (
-                                <>
-                                    <Link to="/admin/franchise/add" className="w-full px-4 py-3 bg-indigo-50 text-indigo-700 rounded-lg font-semibold hover:bg-indigo-100 transition block text-center">
-                                        Add New Franchise
-                                    </Link>
-                                    <Link to="/admin/course" className="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-semibold hover:bg-purple-100 transition block text-center">
-                                        Manage Courses
-                                    </Link>
-                                    <Link to="/admin/wallet/report" className="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-semibold hover:bg-blue-100 transition block text-center">
-                                        View Reports
-                                    </Link>
-                                </>
-                            )}
-                            {user?.role === 'franchise' && (
-                                <>
-                                    <button className="w-full px-4 py-3 bg-green-50 text-green-700 rounded-lg font-semibold hover:bg-green-100 transition">
-                                        Enroll Student
-                                    </button>
-                                    <button className="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-semibold hover:bg-blue-100 transition">
-                                        Manage Batches
-                                    </button>
-                                    <button className="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-semibold hover:bg-purple-100 transition">
-                                        Generate Invoice
-                                    </button>
-                                </>
-                            )}
-                            {user?.role === 'student' && (
-                                <>
-                                    <Link to="/student/browse" className="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-semibold hover:bg-purple-100 transition block text-center">
-                                        Browse Courses
-                                    </Link>
-                                    <Link to="/student/assignments/pending" className="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-semibold hover:bg-blue-100 transition block text-center">
-                                        View Assignments
-                                    </Link>
-                                    <Link to="/student/attendance" className="w-full px-4 py-3 bg-green-50 text-green-700 rounded-lg font-semibold hover:bg-green-100 transition block text-center">
-                                        Attendance Report
-                                    </Link>
-                                </>
-                            )}
-                            {user?.role === 'teacher' && (
-                                <>
-                                    <Link to="/teacher/assignments/create" className="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-semibold hover:bg-blue-100 transition block text-center">
-                                        Create Assignment
-                                    </Link>
-                                    <Link to="/teacher/attendance" className="w-full px-4 py-3 bg-green-50 text-green-700 rounded-lg font-semibold hover:bg-green-100 transition block text-center">
-                                        Mark Attendance
-                                    </Link>
-                                    <Link to="/teacher/materials" className="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-semibold hover:bg-purple-100 transition block text-center">
-                                        Upload Material
-                                    </Link>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                </div>
-=======
   const getNavigationCards = (): NavigationCard[] => {
     switch (user?.role) {
       case 'admin':
@@ -196,7 +135,6 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
         return [];
     }
   };
->>>>>>> Stashed changes
 
   const getDashboardContent = () => {
     switch (user?.role) {
@@ -232,9 +170,9 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
             'New instructor joined the team'
           ]
         };
-      default:
+      case 'teacher':
         return {
-          title: 'Instructor Dashboard',
+          title: 'Teacher Dashboard',
           stats: [
             { icon: Users, label: 'Total Students', value: '89', change: '+6%', color: 'bg-green-500' },
             { icon: BookOpen, label: 'Courses Teaching', value: '3', change: '', color: 'bg-purple-500' },
@@ -246,6 +184,22 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
             'Graded 25 assignments',
             'Scheduled doubt-clearing session',
             'Received positive feedback'
+          ]
+        };
+      default:
+        return {
+          title: 'Dashboard',
+          stats: [
+            { icon: Users, label: 'Total Students', value: '0', change: '', color: 'bg-green-500' },
+            { icon: BookOpen, label: 'Active Courses', value: '0', change: '', color: 'bg-purple-500' },
+            { icon: Activity, label: 'Activity', value: '0', change: '', color: 'bg-blue-500' },
+            { icon: BarChart3, label: 'Rating', value: '0', change: '', color: 'bg-yellow-500' }
+          ],
+          recentActivity: [
+            'No recent activity',
+            'No recent activity',
+            'No recent activity',
+            'No recent activity'
           ]
         };
     }
