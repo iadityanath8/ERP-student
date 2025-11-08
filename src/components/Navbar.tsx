@@ -64,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({
             case 'admin':
                 return [
                     { id: 'dashboard', label: 'Dashboard', icon: Home, page: 'dashboard' },
-                    { id: 'schools', label: 'Schools', icon: School, page: 'schools' },
+                    { id: 'universities', label: 'Universities', icon: School, page: 'universities' },
                     { id: 'users', label: 'Users', icon: Users, page: 'users' },
                     { id: 'courses', label: 'Courses', icon: BookOpen, page: 'courses' },
                     { id: 'reports', label: 'Reports', icon: BarChart3, page: 'reports' },
@@ -154,21 +154,21 @@ const Navbar: React.FC<NavbarProps> = ({
                                 <School className="text-white" size={24} />
                             </div>
                             <div>
-                                <h1 className="text-xl font-bold text-gray-900">School ERP</h1>
+                                <h1 className="text-xl font-bold text-gray-900">University ERP</h1>
                                 <p className="text-xs text-gray-500">Education Management System</p>
                             </div>
                         </div>
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2 sm:space-x-4">
                             <Link to="/login"
-                                className="px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-700"
+                                className="px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-indigo-600 hover:text-indigo-700"
                             >
                                 Login
                             </Link>
                             <Link
                                 to="register-franchise"
-                                className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 shadow-md"
+                                className="px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 shadow-md"
                             >
-                                Register School
+                                Register University
                             </Link>
                         </div>
                     </div>
@@ -189,8 +189,8 @@ const Navbar: React.FC<NavbarProps> = ({
                                 <School className="text-white" size={24} />
                             </div>
                             <div className="hidden md:block">
-                                <h1 className="text-xl font-bold text-gray-900">School ERP</h1>
-                                <p className="text-xs text-gray-500">Sunrise International School</p>
+                                <h1 className="text-xl font-bold text-gray-900">University ERP</h1>
+                                <p className="text-xs text-gray-500">Sunrise International University</p>
                             </div>
                         </div>
 
