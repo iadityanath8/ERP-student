@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, Phone, School, MapPin, Building2, FileText, Users, GraduationCap } from 'lucide-react';
 
-const RegisterSchoolPage = ({ onNavigate }: any) => {
+const RegisterFranchisePage = () => {
+    const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
-        schoolName: '',
-        schoolCode: '',
+        universityName: '',
+        universityCode: '',
         affiliationNumber: '',
         boardType: 'CBSE',
         establishedYear: '',
         principalName: '',
         principalEmail: '',
         principalPhone: '',
-        schoolEmail: '',
-        schoolPhone: '',
+        universityEmail: '',
+        universityPhone: '',
         website: '',
         address: '',
         city: '',
@@ -36,7 +38,7 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
         if (step < 4) {
             setStep(step + 1);
         } else {
-            onNavigate('login');
+            navigate('/login');
         }
     };
 
@@ -52,8 +54,8 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
                         <div className="bg-linear-to-r from-indigo-600 to-purple-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                             <School className="text-white" size={40} />
                         </div>
-                        <h1 className="text-3xl font-bold text-gray-900">Register Your School</h1>
-                        <p className="text-gray-600 mt-2">Join our comprehensive School Management System</p>
+                        <h1 className="text-3xl font-bold text-gray-900">Register Your University</h1>
+                        <p className="text-gray-600 mt-2">Join our comprehensive University Management System</p>
                     </div>
 
                     {/* Progress Steps */}
@@ -89,36 +91,36 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
                     </div>
 
                     <div className="space-y-6">
-                        {/* Step 1: School Information */}
+                        {/* Step 1: University Information */}
                         {step === 1 && (
                             <>
                                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                                     <School size={24} className="text-indigo-600" />
-                                    School Information
+                                    University Information
                                 </h2>
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div className="md:col-span-2">
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">School Name *</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">University Name *</label>
                                         <div className="relative">
                                             <School className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                                             <input
                                                 type="text"
-                                                value={formData.schoolName}
-                                                onChange={(e) => setFormData({ ...formData, schoolName: e.target.value })}
+                                                value={formData.universityName}
+                                                onChange={(e) => setFormData({ ...formData, universityName: e.target.value })}
                                                 className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                                placeholder="e.g., Sunrise International School"
+                                                placeholder="e.g., Sunrise International University"
                                             />
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">School Code *</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">University Code *</label>
                                         <div className="relative">
                                             <FileText className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                                             <input
                                                 type="text"
-                                                value={formData.schoolCode}
-                                                onChange={(e) => setFormData({ ...formData, schoolCode: e.target.value })}
+                                                value={formData.universityCode}
+                                                onChange={(e) => setFormData({ ...formData, universityCode: e.target.value })}
                                                 className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                                 placeholder="e.g., SCH001"
                                             />
@@ -169,27 +171,27 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
                                     </div>
 
                                     <div className="md:col-span-2">
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">School Email *</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">University Email *</label>
                                         <div className="relative">
                                             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                                             <input
                                                 type="email"
-                                                value={formData.schoolEmail}
-                                                onChange={(e) => setFormData({ ...formData, schoolEmail: e.target.value })}
+                                                value={formData.universityEmail}
+                                                onChange={(e) => setFormData({ ...formData, universityEmail: e.target.value })}
                                                 className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                                placeholder="info@school.edu"
+                                                placeholder="info@university.edu"
                                             />
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">School Phone *</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">University Phone *</label>
                                         <div className="relative">
                                             <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                                             <input
                                                 type="tel"
-                                                value={formData.schoolPhone}
-                                                onChange={(e) => setFormData({ ...formData, schoolPhone: e.target.value })}
+                                                value={formData.universityPhone}
+                                                onChange={(e) => setFormData({ ...formData, universityPhone: e.target.value })}
                                                 className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                                 placeholder="+91 98765 43210"
                                             />
@@ -205,7 +207,7 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
                                                 value={formData.website}
                                                 onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                                                 className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                                placeholder="www.school.edu"
+                                                placeholder="www.university.edu"
                                             />
                                         </div>
                                     </div>
@@ -244,7 +246,7 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
                                                 value={formData.principalEmail}
                                                 onChange={(e) => setFormData({ ...formData, principalEmail: e.target.value })}
                                                 className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                                placeholder="principal@school.edu"
+                                                placeholder="principal@university.edu"
                                             />
                                         </div>
                                     </div>
@@ -265,7 +267,7 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
 
                                     <div className="md:col-span-2 bg-blue-50 border border-blue-200 rounded-lg p-4">
                                         <p className="text-sm text-blue-800">
-                                            <strong>Note:</strong> The principal's email will be used as the primary admin account for school management.
+                                            <strong>Note:</strong> The principal's email will be used as the primary admin account for university management.
                                         </p>
                                     </div>
                                 </div>
@@ -277,7 +279,7 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
                             <>
                                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                                     <MapPin size={24} className="text-indigo-600" />
-                                    Location & School Details
+                                    Location & University Details
                                 </h2>
                                 
                                 <div className="space-y-6">
@@ -289,7 +291,7 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
                                                 value={formData.address}
                                                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                                                 className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                                                placeholder="Enter complete school address"
+                                                placeholder="Enter complete university address"
                                                 rows={3}
                                             />
                                         </div>
@@ -371,7 +373,7 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-3">School Facilities</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-3">University Facilities</label>
                                         <div className="grid md:grid-cols-2 gap-4">
                                             <label className="flex items-center space-x-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
                                                 <input
@@ -425,7 +427,7 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
                                 <div className="space-y-6">
                                     <div className="bg-linear-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-4">
                                         <p className="text-sm text-indigo-900">
-                                            <strong>Creating admin account for:</strong> {formData.principalEmail || 'principal@school.edu'}
+                                            <strong>Creating admin account for:</strong> {formData.principalEmail || 'principal@university.edu'}
                                         </p>
                                     </div>
 
@@ -482,7 +484,7 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
                                                 className="w-5 h-5 mt-0.5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
                                             />
                                             <span className="text-sm text-gray-700">
-                                                I want to receive updates and newsletters about School ERP features
+                                                I want to receive updates and newsletters about University ERP features
                                             </span>
                                         </label>
                                     </div>
@@ -513,7 +515,7 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
 
                     <div className="mt-6 text-center">
                         <button
-                            onClick={() => onNavigate('login')}
+                            onClick={() => navigate('/login')}
                             className="text-indigo-600 hover:text-indigo-700 font-medium"
                         >
                             Already have an account? Sign in
@@ -525,4 +527,4 @@ const RegisterSchoolPage = ({ onNavigate }: any) => {
     );
 };
 
-export default RegisterSchoolPage;
+export default RegisterFranchisePage;
